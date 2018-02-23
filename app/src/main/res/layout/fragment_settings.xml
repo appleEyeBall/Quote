@@ -1,0 +1,114 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.oluwatise.quote.Fragments.SettingsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:id="@+id/refreshLocationContainer">
+
+            <TextView
+                android:id="@+id/locationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refresh location"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_below="@id/locationTextView"
+                android:textColor="@color/darkWhite"
+                android:layout_marginStart="30dp"/>
+
+            <ImageView
+                android:id="@+id/refreshLocationImg"
+                android:contentDescription="location image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@id/locationTextView"
+                android:src="@drawable/refresh_img"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="50dp"/>
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/horizontal_line"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_below="@id/refreshLocationContainer"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/darkWhite">
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/notifyMeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@id/horizontal_line">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/notifyMeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't send me messages"
+                android:textSize="18sp"
+                android:textColor="@color/darkWhite"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_below="@id/notifyMeTextView"
+                android:textColor="@color/darkWhite"
+                android:layout_marginStart="30dp"/>
+
+            <Switch
+                android:id="@+id/notifyMe"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignTop="@id/notifyMeTextView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="30dp" />
+
+        </RelativeLayout>
+
+        <!--<TimePicker-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:hapticFeedbackEnabled="true"-->
+            <!--android:headerBackground="@color/darkGrey"-->
+            <!--android:numbersSelectorColor="@color/lightBlack"-->
+            <!--android:timePickerMode="clock"-->
+            <!--android:layout_below="@id/notifyMe"/>-->
+
+
+    </RelativeLayout>
+
+</FrameLayout>

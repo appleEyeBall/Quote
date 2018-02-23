@@ -1,0 +1,94 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.oluwatise.quote.Fragments.WriteFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/rvHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rbg">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/quoteEditContainer"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="top"
+                app:cardCornerRadius="5dp">
+
+                <EditText
+                    android:id="@+id/quoteText"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:cursorVisible="true"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:fontFamily="casual"
+                    android:hint="@string/writeHint"
+                    android:inputType="textMultiLine"
+                    android:padding="8dp"
+                    android:textColor="@color/lightBlack"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@color/lightBlack"
+                    android:background="@drawable/shape"/>
+
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/submitQuote"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/quoteEditContainer"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button"
+                android:text="submit"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submitQuote"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Words from you"
+                android:textColor="@color/lightBlack"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView2"
+                android:layout_marginBottom="80dp">
+                <TextView
+                    android:id="@+id/noQuote"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="30sp"
+                    android:text="The world is awaiting your contribution :) "
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="80dp"
+                    android:visibility="gone"
+                    />
+
+                <include layout="@layout/recycler_view"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</FrameLayout>

@@ -1,0 +1,80 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.oluwatise.quote.Fragments.NameFragment">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/woman1"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hey_stranger"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="35sp"
+            android:id="@+id/heyMsg"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="70dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_name"
+            android:textSize="15sp"
+            android:id="@+id/heyNameMsg"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium"
+            android:layout_below="@id/heyMsg"
+            android:layout_alignParentEnd="true" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:id="@+id/heyText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="80dp"
+            android:paddingLeft="20dp"
+            android:layout_alignParentBottom="true"
+            android:paddingRight="5dp"
+            android:alpha="1">
+
+            <EditText
+                android:id="@+id/heyEdit"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="Name"
+                android:imeOptions="actionSend"
+                android:inputType="text|textPersonName"
+                android:maxLines="1"
+                android:textColor="@color/white" />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/send2"
+            android:layout_alignTop="@+id/heyText"
+            android:layout_toRightOf="@+id/heyText"
+            android:layout_toEndOf="@+id/heyText"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="21dp"
+            android:id="@+id/sendBtn"
+            android:backgroundTint="@color/white" />
+    </RelativeLayout>
+
+</FrameLayout>
