@@ -4,10 +4,32 @@
     android:layout_height="match_parent"
     tools:context="com.example.oluwatise.quote.Fragments.CreditsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:text="Thank you to:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Shameka Davis for coming up with such an excelent idea and for supporting me all through the journey of building this app, and also for being nice enough to be my first client"/>
+
+
+
+
+    </LinearLayout>
 
 </FrameLayout>

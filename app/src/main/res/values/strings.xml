@@ -5,20 +5,21 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hey_stranger"> Hey Lovely, </string>
     <string name="your_name"> What can I call you? </string>
-    <string name="greetingText"> All we really need to empower ourselves? US </string>
+    <string name="greetingText"> Most Popular messages:  </string>
     <string name="contentDescription">Woman</string>
     <string name="welcomeQuote"> All we need to EmPower eachother is eachother </string>
     <string name="action_settings">Settings</string>
     <string name="action_credit">Credit</string>
     <string name="home">Home</string>
-    <string name="writeHint">Write and let your voice be seen</string>
+    <string name="writeHint">We want to hear you</string>
     <string name="permissionExplanation">Do you want to help other women know what city the quotes they see are from?</string>
     <string name="testMsg">For as long as I can remember... </string>
     <string name="delete_prompt">Are you sure you wanna delete this message?</string>
-    <string name="reminderNotificationMessage">How often do you want to recieve Notifications?</string>
+    <string name="reminderNotificationMessage">How often do you want to receive Notifications?</string>
     <string name="sendMessages">Send me messages</string>
     <string name="dontSendMessages">Don\'t send me messages</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="date_picker_title">Pick starting date</string>
+    <string name="network_unavailable">Network Unavailable</string>
 </resources>

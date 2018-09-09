@@ -10,13 +10,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +85,7 @@ public class WriteFragment extends android.app.Fragment{
     String cityName;
     TextView noQuote;
     public String quoteText;
+    FrameLayout writeContainer;
     RecyclerView recyclerView;
     QuoteAdapter quoteAdapter;
     LocationHelper locationHelper;
@@ -113,7 +121,7 @@ public class WriteFragment extends android.app.Fragment{
                 animations.circularRevealFragment(v, coordinatorLayout, right, bottom);
             }
         });
-
+        writeContainer = (FrameLayout) v.findViewById(R.id.writeContainer);
         getMyQuoteHistorySingleton = GetMyQuoteHistorySingleton.getInstance();
         userNameSharedPreferences = getActivity().getSharedPreferences("userName", Context.MODE_PRIVATE);
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
@@ -177,6 +185,7 @@ public class WriteFragment extends android.app.Fragment{
     public void onResume() {
         super.onResume();
         MainActivity.getMainActivity().setToolbarTitle(" Write ");
+        changeBackgroundBasedOnOrientation();
         animations = new Animations(getActivity());
         FloatingActionButton fab = MainActivity.getMainActivity().getFab();
         FloatingActionButton fab2 = MainActivity.getMainActivity().getFab2();
@@ -188,6 +197,21 @@ public class WriteFragment extends android.app.Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         MainActivity.getMainActivity().setToolbarTitle("EmPower");
+    }
+
+    public void changeBackgroundBasedOnOrientation() {
+        WindowManager window = (WindowManager) getActivity().getSystemService(WINDOW_SERVICE);
+        Display display = window.getDefaultDisplay();
+        int num = display.getRotation();
+        if (num == 0) {
+            writeContainer.setBackgroundResource(R.drawable.write_port);
+        }
+        else if (num==1 || num==3) {
+            writeContainer.setBackgroundResource(R.drawable.write_land);
+        }
+        else  {
+            writeContainer.setBackgroundResource(R.drawable.write_port);
+        }
     }
 
 }

@@ -11,7 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numbersSelectorColor="@color/pink"
-        android:headerBackground="@color/darkGrey">
+        android:headerBackground="@color/pink"
+        android:numbersBackgroundColor="@color/darkGrey"
+        android:numbersTextColor="@color/white"
+        android:background="@drawable/eggs">
 
     </TimePicker>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#59595b</color>
+    <color name="colorPrimary">#dd59595b</color>
     <color name="colorPrimaryDark">#414143</color>
     <color name="colorAccent">#fcfcfc</color>
     <color name="darkGrey">#919193</color>
@@ -11,7 +11,9 @@
     <color name="lightPink">#fff2f6</color>
     <color name="lightBlue">#dddfff</color>
     <color name="lightBlack">#7f8181</color>
-    <color name="transparent">#00ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="whiteTint">#acf9f7f7</color>
+    <color name="blackTint">#7cf1ecec</color>
     <color name="pink">#e998aa</color>
 
 </resources>

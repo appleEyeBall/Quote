@@ -7,7 +7,7 @@
         android:repeatMode="reverse"
         android:repeatCount="1"
         android:valueType="floatType"
-        android:duration="250"/>
+        android:duration="150"/>
 
     <objectAnimator
         android:propertyName="scaleX"
@@ -16,6 +16,6 @@
         android:repeatCount="1"
         android:repeatMode="reverse"
         android:valueType="floatType"
-        android:duration="250"/>
+        android:duration="150"/>
 
 </set>

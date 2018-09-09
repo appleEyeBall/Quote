@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.drawable.RippleDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -18,12 +20,18 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.oluwatise.quote.Fragments.CreditsFragment;
@@ -35,12 +43,19 @@ import com.example.oluwatise.quote.Fragments.NameFragment;
 import com.example.oluwatise.quote.HelperClasses.LocationHelper;
 import com.example.oluwatise.quote.Manifest;
 import com.example.oluwatise.quote.R;
+import com.example.oluwatise.quote.Services.GetMostLikedMsgs;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+import com.google.android.gms.ads.MobileAds;
 
 import static android.support.v4.app.ActivityCompat.requestPermissions;
 
@@ -55,8 +70,12 @@ public class MainActivity extends AppCompatActivity {
     WriteFragment writeFragment;
     NameFragment nameFragment;
     ReadFragment readFragment;
+    TextView mostLiked1; CardView mostLikedContainer1;
+    TextView mostLiked2; CardView mostLikedContainer2;
+    TextView mostLiked3; CardView mostLikedContainer3;
     int viewPagerPosition;
     SettingsFragment settingsFragment;
+    CreditsFragment creditsFragment;
     SharedPreferences userNameSharedPreference;
     SharedPreferences.Editor userNameEditor;
     Animations animations = new Animations(this);
@@ -85,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         this.setMainActivity(this);
         Log.v("POWER", "THis is the beginning of the activity");
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -95,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
         getFragment();      // get fragment if one exists and create if not (NOTE: all fragments are initialized here)
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        changeBackgroundBasedOnOrientation();       // This changes the background
+        MobileAds.initialize(this, "ca-app-pub-9110389779271843~7759487012");   //Initialize mobile ads
+        initializeBottomBanner(); // load the ads
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("POWER", "replacing fragment");
                     fm.beginTransaction().replace(R.id.mainFragmentContainer, writeFragment).addToBackStack("write").commit();
                 }
+                changeToolbarColorBlack();
 
             }
         });
@@ -126,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("POWER", "replacing fragment");
                     fm.beginTransaction().replace(R.id.mainFragmentContainer, readFragment).addToBackStack("read").commit();
                 }
+                changeToolbarColorBlack();
             }
         });
 
@@ -139,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     animations.showFab(fab);
                     animations.showFab(fab2);
                     setToolbarTitle("EmPower");
+                    removeToolbarColor();
                 }
             }
         });
@@ -154,12 +182,32 @@ public class MainActivity extends AppCompatActivity {
         else {
             exitFullscreen();
         }
+        GetMostLikedMsgs getMostLikedMsgs = GetMostLikedMsgs.getInstance();
+        mostLiked1 = (TextView) findViewById(R.id.mostLiked1);
+        mostLiked2 = (TextView) findViewById(R.id.mostLiked2);
+        mostLiked3 = (TextView) findViewById(R.id.mostLiked3);
+        mostLikedContainer1 = (CardView) findViewById(R.id.mostLikedContainer1);
+        mostLikedContainer2 = (CardView) findViewById(R.id.mostLikedContainer2);
+        mostLikedContainer3 = (CardView) findViewById(R.id.mostLikedContainer3);
+
+        getMostLikedMsgs.getMsgs(mostLiked1, mostLikedContainer1, 700, 0);
+        getMostLikedMsgs.getMsgs(mostLiked2, mostLikedContainer2, 1000, 25);
+        getMostLikedMsgs.getMsgs(mostLiked3, mostLikedContainer3, 1400, 50);
 
         // animate the fab button
         animations.moveRightFab(fab);
         animations.moveLeftFab(fab2);
         loadFromNotification();         // if notification was clicked
 
+    }
+
+    private void changeToolbarColorBlack() {
+        appBarLayout.setBackgroundResource(R.drawable.black_heading);
+        appBarLayout.setElevation(8);
+    }
+    private void removeToolbarColor() {
+        appBarLayout.setBackgroundResource(R.drawable.shape3);
+        appBarLayout.setElevation(0);
     }
 
     @Override
@@ -181,19 +229,28 @@ public class MainActivity extends AppCompatActivity {
                 fm.beginTransaction().add(R.id.mainFragmentContainer, settingsFragment).commit();
                 animations.hideFab(fab);
                 animations.hideFab(fab2);
-                return true;
             }
             else {
                 fm.beginTransaction().replace(R.id.mainFragmentContainer, settingsFragment).addToBackStack("settings").commit();
                 animations.hideFab(fab);
                 animations.hideFab(fab2);
-                return true;
             }
+            changeToolbarColorBlack();
+            return true;
         }
         if (id == R.id.action_credit) {
-            CreditsFragment creditsFragment = CreditsFragment.newInstance("a", "b");
-            getFragmentManager().beginTransaction().remove(currentFragment);
-            fm.beginTransaction().add(R.id.mainFragmentContainer, creditsFragment).commit();
+            currentFragment = fm.findFragmentById(R.id.mainFragmentContainer);
+            if (currentFragment == null) {
+                fm.beginTransaction().add(R.id.mainFragmentContainer, creditsFragment).commit();
+                animations.hideFab(fab);
+                animations.hideFab(fab2);
+            }
+            else {
+                fm.beginTransaction().replace(R.id.mainFragmentContainer, creditsFragment).addToBackStack("credits").commit();
+                animations.hideFab(fab);
+                animations.hideFab(fab2);
+            }
+            changeToolbarColorBlack();
             return true;
         }
 
@@ -225,24 +282,35 @@ public class MainActivity extends AppCompatActivity {
                 writeFragment = WriteFragment.newInstance("a", "b");
                 readFragment = ReadFragment.newInstance("a", "b");
                 settingsFragment = SettingsFragment.newInstance("a", "b");
+                creditsFragment = CreditsFragment.newInstance("a", "b");
             }
             else if (currentFragment instanceof WriteFragment) {
                 writeFragment = (WriteFragment) fm.findFragmentById(R.id.mainFragmentContainer);
                 nameFragment = NameFragment.newInstance();
                 readFragment = ReadFragment.newInstance("a", "b");
                 settingsFragment = SettingsFragment.newInstance("a", "b");
+                creditsFragment = CreditsFragment.newInstance("a", "b");
             }
             else if (currentFragment instanceof ReadFragment) {
                 readFragment = (ReadFragment) fm.findFragmentById(R.id.mainFragmentContainer);
                 nameFragment = NameFragment.newInstance();
                 writeFragment = WriteFragment.newInstance("a", "b");
                 settingsFragment = SettingsFragment.newInstance("a", "b");
+                creditsFragment = CreditsFragment.newInstance("a", "b");
             }
             else if (currentFragment instanceof SettingsFragment) {
                 settingsFragment = (SettingsFragment) fm.findFragmentById(R.id.mainFragmentContainer);
                 nameFragment = NameFragment.newInstance();
                 writeFragment = WriteFragment.newInstance("a", "b");
                 readFragment = ReadFragment.newInstance("a", "b");
+                creditsFragment = CreditsFragment.newInstance("a", "b");
+            }
+            else if (currentFragment instanceof CreditsFragment) {
+                creditsFragment = (CreditsFragment) fm.findFragmentById(R.id.mainFragmentContainer);
+                readFragment = ReadFragment.newInstance("a", "b");
+                nameFragment = NameFragment.newInstance();
+                writeFragment = WriteFragment.newInstance("a", "b");
+                settingsFragment = SettingsFragment.newInstance("a", "b");
             }
         }
         else {
@@ -250,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
             writeFragment = WriteFragment.newInstance("a", "b");
             readFragment = ReadFragment.newInstance("a", "b");
             settingsFragment = SettingsFragment.newInstance("a", "b");
+            creditsFragment = CreditsFragment.newInstance("a", "b");
         }
     }
 
@@ -355,4 +424,27 @@ public class MainActivity extends AppCompatActivity {
     public FloatingActionButton getFab2() {
         return fab2;
     }
+
+    public void changeBackgroundBasedOnOrientation() {
+        WindowManager window = (WindowManager) getSystemService(WINDOW_SERVICE);
+        Display display = window.getDefaultDisplay();
+        int num = display.getRotation();
+        if (num == 0) {
+            getCoordinatorLayout().setBackgroundResource(R.drawable.home_port);
+        }
+        else if (num==1 || num==3) {
+            getCoordinatorLayout().setBackgroundResource(R.drawable.home_land);
+        }
+        else  {
+            getCoordinatorLayout().setBackgroundResource(R.drawable.home_port);
+        }
+    }
+    private void initializeBottomBanner(){
+        AdView bottomAd;
+        bottomAd = (AdView) findViewById(R.id.bottomAdView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        bottomAd.loadAd(adRequest);
+
+    }
+
 }

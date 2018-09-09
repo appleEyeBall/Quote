@@ -9,9 +9,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.example.oluwatise.quote.Activities.MainActivity;
 import com.example.oluwatise.quote.HelperClasses.Animations;
@@ -58,6 +61,7 @@ public class ReadFragment extends android.app.Fragment {
     }
 
     ViewPager viewPager;
+    RelativeLayout readContainer;
     Animations animations;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,7 @@ public class ReadFragment extends android.app.Fragment {
                 animations.circularRevealFragment(v, coordinatorLayout, left, bottom);
             }
         });
+        readContainer = (RelativeLayout) v.findViewById(R.id.readContainer);
         // set up viewPager
         viewPager = (ViewPager) v.findViewById(R.id.viewPager);
         GetAllMessageFeed getAllMessageFeed = GetAllMessageFeed.getInstance();
@@ -104,10 +109,25 @@ public class ReadFragment extends android.app.Fragment {
     public void onResume() {
         super.onResume();
         MainActivity.getMainActivity().setToolbarTitle("Read");
+        changeBackgroundBasedOnOrientation();
         animations = new Animations(getActivity());
         FloatingActionButton fab = MainActivity.getMainActivity().getFab();
         FloatingActionButton fab2 = MainActivity.getMainActivity().getFab2();
         animations.hideFab(fab2);
         animations.showFab(fab);
+    }
+    public void changeBackgroundBasedOnOrientation() {
+        WindowManager window = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+        Display display = window.getDefaultDisplay();
+        int num = display.getRotation();
+        if (num == 0) {
+            readContainer.setBackgroundResource(R.drawable.read_port);
+        }
+        else if (num==1 || num==3) {
+            readContainer.setBackgroundResource(R.drawable.read_land);
+        }
+        else  {
+            readContainer.setBackgroundResource(R.drawable.read_port);
+        }
     }
 }

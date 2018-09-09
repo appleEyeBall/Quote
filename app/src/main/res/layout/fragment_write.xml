@@ -1,15 +1,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/writeContainer"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.oluwatise.quote.Fragments.WriteFragment">
+    tools:context="com.example.oluwatise.quote.Fragments.WriteFragment"
+    android:background="@drawable/write_port">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/blackTint"/>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/rvHolder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rbg">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,9 +42,9 @@
                     android:inputType="textMultiLine"
                     android:padding="8dp"
                     android:textColor="@color/lightBlack"
+                    android:background="@null"
                     android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@color/lightBlack"
-                    android:background="@drawable/shape"/>
+                    android:textCursorDrawable="@color/lightBlack" />
 
             </android.support.v7.widget.CardView>
 

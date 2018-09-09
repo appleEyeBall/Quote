@@ -8,13 +8,21 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.Transformation;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.oluwatise.quote.Activities.MainActivity;
 import com.example.oluwatise.quote.R;
+import com.example.oluwatise.quote.Services.GetMostLikedMsgs;
 
 /**
  * Created by Oluwatise on 11/20/2017.
@@ -224,5 +232,17 @@ public class Animations {
         ObjectAnimator oa = ObjectAnimator.ofFloat(view,"alpha", 0, 1);
         oa.setDuration(1);
         oa.start();
+    }
+    public void moveMostLiked(final CardView view, int delay, int topMargin) {
+        AnimatorSet animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.mostliked1_animation);
+        animatorSet.setTarget(view);
+        animatorSet.setStartDelay(delay);
+        animatorSet.start();
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view,"translationY", 0, topMargin);
+        objectAnimator.setDuration(500);
+        objectAnimator.setStartDelay(2000);
+        objectAnimator.start();
+
     }
 }
